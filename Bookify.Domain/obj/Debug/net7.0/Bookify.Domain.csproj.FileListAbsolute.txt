@@ -1,0 +1,12 @@
+E:\Bookify\Bookify.Domain\bin\Debug\net7.0\Bookify.Domain.deps.json
+E:\Bookify\Bookify.Domain\bin\Debug\net7.0\Bookify.Domain.dll
+E:\Bookify\Bookify.Domain\bin\Debug\net7.0\Bookify.Domain.pdb
+E:\Bookify\Bookify.Domain\obj\Debug\net7.0\Bookify.Domain.csproj.AssemblyReference.cache
+E:\Bookify\Bookify.Domain\obj\Debug\net7.0\Bookify.Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\Bookify\Bookify.Domain\obj\Debug\net7.0\Bookify.Domain.AssemblyInfoInputs.cache
+E:\Bookify\Bookify.Domain\obj\Debug\net7.0\Bookify.Domain.AssemblyInfo.cs
+E:\Bookify\Bookify.Domain\obj\Debug\net7.0\Bookify.Domain.csproj.CoreCompileInputs.cache
+E:\Bookify\Bookify.Domain\obj\Debug\net7.0\Bookify.Domain.dll
+E:\Bookify\Bookify.Domain\obj\Debug\net7.0\refint\Bookify.Domain.dll
+E:\Bookify\Bookify.Domain\obj\Debug\net7.0\Bookify.Domain.pdb
+E:\Bookify\Bookify.Domain\obj\Debug\net7.0\ref\Bookify.Domain.dll

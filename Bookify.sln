@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD071CA8-64AA-4F6E-8BDB-BD8320529F99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{0FDC8F16-48AD-4E0F-95EA-72230864B9BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bookify.Domain", "Bookify.Domain\Bookify.Domain.csproj", "{C0E8F7E2-8C23-49E8-973E-A4CBFD0C1EA8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C0E8F7E2-8C23-49E8-973E-A4CBFD0C1EA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0E8F7E2-8C23-49E8-973E-A4CBFD0C1EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0E8F7E2-8C23-49E8-973E-A4CBFD0C1EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0E8F7E2-8C23-49E8-973E-A4CBFD0C1EA8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C0E8F7E2-8C23-49E8-973E-A4CBFD0C1EA8} = {AD071CA8-64AA-4F6E-8BDB-BD8320529F99}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7886086E-5FDE-4346-9331-C3CEE77E1E7A}
+	EndGlobalSection
+EndGlobal
