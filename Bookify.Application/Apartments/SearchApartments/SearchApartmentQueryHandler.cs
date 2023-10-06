@@ -15,12 +15,14 @@ namespace Bookify.Application.Apartments.SearchApartments
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
 
+        //use Postgres SQL array is allow as a column. But in SQlServer it not,
         private static readonly int[] ActiveBookingStatuses =
         {
             (int)BookingStatus.Reserved,
             (int)BookingStatus.Confirmed,
             (int)BookingStatus.Completed,
-        };
+        };       
+        
 
         public SearchApartmentQueryHandler(ISqlConnectionFactory sqlConnectionFactory)
         {
@@ -29,7 +31,10 @@ namespace Bookify.Application.Apartments.SearchApartments
 
         public async Task<Result<IReadOnlyList<ApartmentResponse>>> Handle(SearchApartmentQuery request, CancellationToken cancellationToken)
         {
-            if(request.StartDate > request.EndDate)
+            //That why we converting int[] to string and split the value with ","
+            var activeBookingStatuses = string.Join(",", ActiveBookingStatuses.Select(x => x.ToString()).ToList());
+
+            if (request.StartDate > request.EndDate)
                 return Result.Success<IReadOnlyList<ApartmentResponse>>(new List<ApartmentResponse>());
 
             using var connection = _sqlConnectionFactory.CreateConnection();
@@ -55,7 +60,7 @@ namespace Bookify.Application.Apartments.SearchApartments
                     b.apartment_id = a.id AND
                     b.duration_start <= @EndDate AND
                     b.duration_end >= @StartDate AND
-                    b.status = ANY(@ActiveBookingStatuses)
+                    b.status IN @ActiveBookingStatuses
             )
             """;
 

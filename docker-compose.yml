@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  bookify.api:
+    image: ${DOCKER_REGISTRY-}bookifyapi
+    container_name: Bookify.API
+    build:
+      context: .
+      dockerfile: Bookify.API/Dockerfile
+    depends_on:
+        - bookify-db
+   
+  bookify-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: Bookify.Db
+    ports:
+        - 8002:1433
+    environment:
+        - ACCEPT_EULA=Y
+        - SA_PASSWORD=Abhi@2021

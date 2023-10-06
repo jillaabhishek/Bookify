@@ -27,19 +27,18 @@ namespace Bookify.Infrastructure.Configurations
                    .HasMaxLength(200)
                    .HasConversion(review => review.Value, value => new Comment(value));
 
-            builder.Property(review => review.CreatedOnUtc);
-
             builder.HasOne<Apartment>()
                    .WithMany()
-                   .HasForeignKey(apartment => apartment.Id);
+                   .HasForeignKey(review => review.ApartmentId);
 
             builder.HasOne<Booking>()
                    .WithMany()
-                   .HasForeignKey(booking => booking.Id);
+                   .HasForeignKey(review => review.BookingId)
+                   .OnDelete(DeleteBehavior.ClientNoAction);                    
 
             builder.HasOne<User>()
                    .WithMany()
-                   .HasForeignKey(user => user.Id);
+                   .HasForeignKey(review => review.UserId);
         }
     }
 }

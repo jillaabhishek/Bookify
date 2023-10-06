@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Bookify.Application.Abstractions.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bookify.Infrastructure.Data
 {
-    internal sealed class SqlConnectionFactory
+    internal sealed class SqlConnectionFactory : ISqlConnectionFactory
     {
         private readonly string _connectionString;
 

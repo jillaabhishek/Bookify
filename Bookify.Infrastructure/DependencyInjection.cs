@@ -1,4 +1,5 @@
 ﻿using Bookify.Application.Abstractions.Clock;
+using Bookify.Application.Abstractions.Data;
 using Bookify.Application.Abstractions.Email;
 using Bookify.Domain.Abstractions;
 using Bookify.Domain.Apartments;
@@ -32,8 +33,8 @@ namespace Bookify.Infrastructure
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
-                options.UseSqlServer(connectionString)
-                       .UseSnakeCaseNamingConvention();
+                options.UseSqlServer(connectionString, x => x.UseDateOnlyTimeOnly())
+                       .UseSnakeCaseNamingConvention();                
             });
 
             services.AddScoped<IUserRespository, UserRepository>();
@@ -42,7 +43,7 @@ namespace Bookify.Infrastructure
 
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
-            services.AddSingleton<SqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
+            services.AddSingleton<ISqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
 
             SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
 

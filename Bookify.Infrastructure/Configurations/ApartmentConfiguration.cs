@@ -2,6 +2,7 @@
 using Bookify.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Bookify.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Apartment> builder)
         {
-            builder.ToTable("apartment");
+            builder.ToTable("apartments");
 
             builder.HasKey(x => x.Id);
 
@@ -27,6 +28,13 @@ namespace Bookify.Infrastructure.Configurations
             builder.Property(apartment => apartment.Description)
                    .HasMaxLength(2000)
                    .HasConversion(description => description.description, value => new Description(value));
+
+            builder.Property(apartment => apartment.Amenities)
+                .HasConversion(v => string.Join(",", v.Select(e => e.ToString("D")).ToArray()),
+                               v => v.Split(new[] { ',' })
+                                     .Select(e => Enum.Parse(typeof(Amenity), e))
+                                     .Cast<Amenity>()
+                                     .ToList());
 
             builder.OwnsOne(apartment => apartment.Price, priceBuilder =>
             {
