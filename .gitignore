@@ -1,0 +1,8 @@
+.vs/
+Bookify.Application/bin/
+Bookify.Application/obj/
+Bookify.Infrastructure/bin/
+Bookify.Infrastructure/obj/
+Bookify.API/bin/
+obj/
+bin/

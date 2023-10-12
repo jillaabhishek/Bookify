@@ -31,6 +31,21 @@ public sealed class Apartment : Entity
         Amenities = amenities;
     }
 
+    //public Apartment(
+    //    Guid id,
+    //    Name name,
+    //    Description description,
+    //    DateTime? lastBookedOnUtc,
+    //    List<Amenity> amenities
+    //    ) : base(id)
+    //{
+    //    Id = id;
+    //    Name = name;
+    //    Description = description;
+    //    LastBookedOnUtc = lastBookedOnUtc;
+    //    Amenities = amenities;
+    //}
+
     private Apartment()
     {
 

@@ -1,18 +1,22 @@
-﻿using Bookify.Application.Abstractions.Clock;
+﻿using Bookify.Application.Abstractions.Authentication;
+using Bookify.Application.Abstractions.Clock;
 using Bookify.Application.Abstractions.Data;
 using Bookify.Application.Abstractions.Email;
 using Bookify.Domain.Abstractions;
 using Bookify.Domain.Apartments;
 using Bookify.Domain.Bookings;
 using Bookify.Domain.Users;
+using Bookify.Infrastructure.Authentication;
 using Bookify.Infrastructure.Clock;
 using Bookify.Infrastructure.Data;
 using Bookify.Infrastructure.Email;
 using Bookify.Infrastructure.Repositories;
 using Dapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,13 +32,49 @@ namespace Bookify.Infrastructure
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             services.AddTransient<IEmailService, EmailService>();
 
+            AddPersistence(services, configuraton);
+
+            AddAuthentication(services, configuraton);
+
+            return services;
+        }
+
+        private static void AddAuthentication(IServiceCollection services, IConfiguration configuraton)
+        {
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer();
+
+            services.Configure<AuthenticationOptions>(configuraton.GetSection("Authentication"));
+
+            services.ConfigureOptions<JwtBearerOptionsSetup>();
+
+            services.Configure<KeycloakOptions>(configuraton.GetSection("Keycloak"));
+
+            services.AddTransient<AdminAuthorizationDelegatingHandler>();
+
+            services.AddHttpClient<IAuthenticationService, AuthenticationService>((serviceProvider, httpClient) =>
+            {
+                var keyCloakOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+                httpClient.BaseAddress = new Uri(keyCloakOptions.AdminUrl);
+            })
+             .AddHttpMessageHandler<AdminAuthorizationDelegatingHandler>();
+
+            services.AddHttpClient<IJwtService, JwtService>((serviceProvider, httpClient) =>
+            {
+                var keyClockOptions = serviceProvider.GetRequiredService<IOptions<KeycloakOptions>>().Value;
+                httpClient.BaseAddress = new Uri(keyClockOptions.TokenUrl);
+            });
+        }
+
+        private static void AddPersistence(IServiceCollection services, IConfiguration configuraton)
+        {
             var connectionString = configuraton.GetConnectionString("Database") ??
-                                throw new ArgumentNullException(nameof(configuraton));
+                                            throw new ArgumentNullException(nameof(configuraton));
 
             services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options.UseSqlServer(connectionString, x => x.UseDateOnlyTimeOnly())
-                       .UseSnakeCaseNamingConvention();                
+                       .UseSnakeCaseNamingConvention();
             });
 
             services.AddScoped<IUserRespository, UserRepository>();
@@ -46,8 +86,6 @@ namespace Bookify.Infrastructure
             services.AddSingleton<ISqlConnectionFactory>(_ => new SqlConnectionFactory(connectionString));
 
             SqlMapper.AddTypeHandler(new DateOnlyTypeHandler());
-
-            return services;
         }
     }
 }
