@@ -43,7 +43,13 @@ namespace Bookify.API.Controllers.Bookings
             if (result.IsFailure)
                 return TypedResults.BadRequest(result.Error);
 
-            return TypedResults.CreatedAtRoute(result.Value, nameof(GetBooking), new { id = result.Value });
+            return TypedResults.CreatedAtRoute(result.Value, nameof(GetBooking),
+                new
+                {
+                    id = result.Value,
+                    sender = sender,
+                    cancellationToken = cancellationToken
+                });
         }
     }
 }

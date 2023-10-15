@@ -1,6 +1,9 @@
-﻿using Bookify.Domain.Abstractions;
+﻿using Bookify.Application.Abstractions.Clock;
+using Bookify.Domain.Abstractions;
+using Bookify.Infrastructure.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,10 +16,20 @@ namespace Bookify.Infrastructure
     public sealed class ApplicationDbContext : DbContext, IUnitOfWork
     {
         private readonly IPublisher _publisher;
+        private readonly IDateTimeProvider _dateProvider;
 
-        public ApplicationDbContext(DbContextOptions options, IPublisher publisher) : base(options)
+        private static readonly JsonSerializerSettings JsonSerializerSettings = new()
+        {
+            TypeNameHandling = TypeNameHandling.All
+        };
+
+        public ApplicationDbContext(
+            DbContextOptions options,
+            IPublisher publisher,
+            IDateTimeProvider dateProvider) : base(options)
         {
             _publisher = publisher;
+            _dateProvider = dateProvider;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,9 +43,9 @@ namespace Bookify.Infrastructure
         {
             try
             {
-                var result = await base.SaveChangesAsync(cancellationToken);
+                AddDomainEventsAsOutboxMessages();
 
-                await PublishDomainEventsAsync();
+                var result = await base.SaveChangesAsync(cancellationToken);
 
                 return result;
             }
@@ -42,22 +55,27 @@ namespace Bookify.Infrastructure
             }
         }
 
-        private async Task PublishDomainEventsAsync()
+        private void AddDomainEventsAsOutboxMessages()
         {
-            var domainEvents = ChangeTracker.Entries<IEntity>().Select(entry => entry.Entity)
-                .SelectMany(entity =>
-                    {
-                        var domainEvents = entity.GetDomainEvents();
-                        entity.ClearDomainEvents();
+            var domainEvents = ChangeTracker
+                                .Entries<IEntity>()
+                                .Select(entry => entry.Entity)
+                                .SelectMany(entity =>
+                                    {
+                                        var domainEvents = entity.GetDomainEvents();
+                                        entity.ClearDomainEvents();
 
-                        return domainEvents;
-                    })
-                .ToList();
+                                        return domainEvents;
+                                    })
+                                .Select(domainEvent => new OutboxMessage(
+                                    Guid.NewGuid(),
+                                    _dateProvider.UtcNow,
+                                    domainEvent.GetType().ToString(),
+                                    JsonConvert.SerializeObject(domainEvent, JsonSerializerSettings)
+                                    ))
+                            .ToList();
 
-            foreach (var domainEvent in domainEvents)
-            {
-                await _publisher.Publish(domainEvent);
-            }
+            AddRange(domainEvents);
         }
     }
 }

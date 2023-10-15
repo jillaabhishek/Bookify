@@ -39,6 +39,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapBookingEndpoints();
+//used for Minimal API
+//app.MapBookingEndpoints();
 
 app.Run();

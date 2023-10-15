@@ -10,6 +10,7 @@ using Bookify.Infrastructure.Authentication;
 using Bookify.Infrastructure.Clock;
 using Bookify.Infrastructure.Data;
 using Bookify.Infrastructure.Email;
+using Bookify.Infrastructure.Outbox;
 using Bookify.Infrastructure.Repositories;
 using Dapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -17,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,8 +37,23 @@ namespace Bookify.Infrastructure
             AddPersistence(services, configuraton);
 
             AddAuthentication(services, configuraton);
+            AddbackgroundJobs(services, configuraton);
 
             return services;
+        }
+
+        private static void AddbackgroundJobs(IServiceCollection services, IConfiguration configuraton)
+        {
+            services.Configure<OutboxOptions>(configuraton.GetSection("Outbox"));
+
+            services.AddQuartz(options =>
+            {
+                options.UseMicrosoftDependencyInjectionJobFactory();
+            });
+
+            services.AddQuartzHostedService(options => options.WaitForJobsToComplete = true);
+
+            services.ConfigureOptions<ProcessOutboxMessagesJobSetup>();
         }
 
         private static void AddAuthentication(IServiceCollection services, IConfiguration configuraton)
