@@ -15,14 +15,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.API", "Bookify.API\
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{85F12F23-937B-4088-A5FD-2EDEAF90622B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{DA881546-B319-49D1-A2B4-F308B2897DD3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.Application.UnitTests", "test\Bookify.Application.UnitTests\Bookify.Application.UnitTests.csproj", "{790D5F9B-9B5B-43C2-BF92-6C45BA2BCF01}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.ArchitectureTests", "test\Bookify.ArchitectureTests\Bookify.ArchitectureTests.csproj", "{577D5009-4FEB-4BB7-A335-1AA33E33EDF8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bookify.Domain.UnitTests", "test\Bookify.Domain.UnitTests\Bookify.Domain.UnitTests.csproj", "{D5C643AC-AC06-4D39-8378-31FA6629EBE7}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,18 +41,6 @@ Global
 		{85F12F23-937B-4088-A5FD-2EDEAF90622B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85F12F23-937B-4088-A5FD-2EDEAF90622B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85F12F23-937B-4088-A5FD-2EDEAF90622B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{790D5F9B-9B5B-43C2-BF92-6C45BA2BCF01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{790D5F9B-9B5B-43C2-BF92-6C45BA2BCF01}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{790D5F9B-9B5B-43C2-BF92-6C45BA2BCF01}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{790D5F9B-9B5B-43C2-BF92-6C45BA2BCF01}.Release|Any CPU.Build.0 = Release|Any CPU
-		{577D5009-4FEB-4BB7-A335-1AA33E33EDF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{577D5009-4FEB-4BB7-A335-1AA33E33EDF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{577D5009-4FEB-4BB7-A335-1AA33E33EDF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{577D5009-4FEB-4BB7-A335-1AA33E33EDF8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D5C643AC-AC06-4D39-8378-31FA6629EBE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D5C643AC-AC06-4D39-8378-31FA6629EBE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D5C643AC-AC06-4D39-8378-31FA6629EBE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D5C643AC-AC06-4D39-8378-31FA6629EBE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,9 +50,6 @@ Global
 		{52A0D65C-7D75-4E1E-A9C3-1C6364B79EFA} = {AD071CA8-64AA-4F6E-8BDB-BD8320529F99}
 		{3A264FBA-534A-4674-8B86-5B3BB145028E} = {AD071CA8-64AA-4F6E-8BDB-BD8320529F99}
 		{F982BB91-6196-4075-9783-72ADAECF64D8} = {AD071CA8-64AA-4F6E-8BDB-BD8320529F99}
-		{790D5F9B-9B5B-43C2-BF92-6C45BA2BCF01} = {DA881546-B319-49D1-A2B4-F308B2897DD3}
-		{577D5009-4FEB-4BB7-A335-1AA33E33EDF8} = {DA881546-B319-49D1-A2B4-F308B2897DD3}
-		{D5C643AC-AC06-4D39-8378-31FA6629EBE7} = {DA881546-B319-49D1-A2B4-F308B2897DD3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7886086E-5FDE-4346-9331-C3CEE77E1E7A}
