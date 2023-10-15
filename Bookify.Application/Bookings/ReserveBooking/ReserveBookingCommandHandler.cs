@@ -13,18 +13,18 @@ using System.Threading.Tasks;
 
 namespace Bookify.Application.Bookings.ReserveBooking
 {
-    internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBookingCommand, Guid>
+    public sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBookingCommand, Guid>
     {
-        private readonly IUserRespository _userRespository;
-        private readonly IAparmentRespository _aparmentRespository;
+        private readonly IUserRepository _userRespository;
+        private readonly IApartmentRepository _aparmentRespository;
         private readonly IBookingRepository _bookingRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly PricingService _pricingService;
         private readonly IDateTimeProvider _dateTimeProvider;
 
         public ReserveBookingCommandHandler(
-            IUserRespository userRespository,
-            IAparmentRespository aparmentRespository,
+            IUserRepository userRespository,
+            IApartmentRepository aparmentRespository,
             IUnitOfWork unitOfWork,
             PricingService pricingService,
             IBookingRepository bookingRepository,

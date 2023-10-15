@@ -94,9 +94,9 @@ namespace Bookify.Infrastructure
                        .UseSnakeCaseNamingConvention();
             });
 
-            services.AddScoped<IUserRespository, UserRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IBookingRepository, BookingRepository>();
-            services.AddScoped<IAparmentRespository, ApartmentRepository>();
+            services.AddScoped<IApartmentRepository, ApartmentRepository>();
 
             services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 

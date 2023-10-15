@@ -14,12 +14,12 @@ namespace Bookify.Application.Bookings.ReserveBooking
     internal sealed class BookingReservedDomainEventHandler : INotificationHandler<BookingReservedDomainEvent>
     {
         private readonly IBookingRepository _bookingRepository;
-        private readonly IUserRespository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IEmailService _emailService;
 
         public BookingReservedDomainEventHandler(
             IBookingRepository bookingRepository,
-            IUserRespository userRepository,
+            IUserRepository userRepository,
             IEmailService emailService)
         {
             _bookingRepository = bookingRepository;

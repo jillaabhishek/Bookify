@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Bookify.Infrastructure.Repositories
 {
-    internal sealed class UserRepository : Repository<User, UserId>, IUserRespository
+    internal sealed class UserRepository : Repository<User, UserId>, IUserRepository
     {
         public UserRepository(ApplicationDbContext context) : base(context)
         {

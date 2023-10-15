@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bookify.Infrastructure.Repositories
 {
-    internal sealed class ApartmentRepository : Repository<Apartment, ApartmentId>, IAparmentRespository
+    internal sealed class ApartmentRepository : Repository<Apartment, ApartmentId>, IApartmentRepository
     {
         public ApartmentRepository(ApplicationDbContext context) : base(context)
         {

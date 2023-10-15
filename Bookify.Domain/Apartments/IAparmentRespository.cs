@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bookify.Domain.Apartments
 {
-    public interface IAparmentRespository
+    public interface IApartmentRepository
     {
         Task<Apartment?> GetByIdAsync(ApartmentId id, CancellationToken cancellationToken = default);
     }

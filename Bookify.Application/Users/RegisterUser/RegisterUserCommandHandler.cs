@@ -13,12 +13,12 @@ namespace Bookify.Application.Users.RegisterUser
     internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, Guid>
     {
         private readonly IAuthenticationService _authenticationService;
-        private readonly IUserRespository _userRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public RegisterUserCommandHandler(
             IAuthenticationService authenticationService, 
-            IUserRespository userRepository, 
+            IUserRepository userRepository, 
             IUnitOfWork unitOfWork)
         {
             _authenticationService = authenticationService;
