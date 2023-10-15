@@ -1,4 +1,5 @@
 ﻿using Bookify.Domain.Apartments;
+using Bookify.Domain.Bookings;
 using Bookify.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -18,6 +19,10 @@ namespace Bookify.Infrastructure.Configurations
             builder.ToTable("apartments");
 
             builder.HasKey(x => x.Id);
+
+            builder.Property(apartment => apartment.Id)
+                   .HasConversion(apartment => apartment.Value, value => new ApartmentId(value));
+
 
             builder.OwnsOne(x => x.Address);
 

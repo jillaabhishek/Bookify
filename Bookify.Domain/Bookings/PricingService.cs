@@ -32,7 +32,7 @@ namespace Bookify.Domain.Bookings
             if (percentageUpCharge > 0)
                 amenitiesUpCharge = new Money(priceForPeriod.Amount * percentageUpCharge, currency);
 
-            var totalPrice = Money.Zero();
+            var totalPrice = Money.Zero(currency);
 
             totalPrice += priceForPeriod;
 

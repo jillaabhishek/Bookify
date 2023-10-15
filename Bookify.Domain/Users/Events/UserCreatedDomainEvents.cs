@@ -7,4 +7,4 @@ using System.Threading.Tasks;
 
 namespace Bookify.Domain.Users.Events;
 
-public record UserCreatedDomainEvents(Guid Id) : IDomainEvent;
+public record UserCreatedDomainEvents(UserId Id) : IDomainEvent;

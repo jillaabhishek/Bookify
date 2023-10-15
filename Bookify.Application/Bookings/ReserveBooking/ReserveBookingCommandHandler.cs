@@ -40,10 +40,10 @@ namespace Bookify.Application.Bookings.ReserveBooking
 
         public async Task<Result<Guid>> Handle(ReserveBookingCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRespository.GetByIdAsync(request.UserId);
+            var user = await _userRespository.GetByIdAsync(new UserId(request.UserId));
             if (user is null) return Result.Failure<Guid>(UserErrors.NotFound);
 
-            var apartment = await _aparmentRespository.GetByIdAsync(request.ApartmentId);
+            var apartment = await _aparmentRespository.GetByIdAsync(new ApartmentId(request.ApartmentId));
             if (apartment is null) return Result.Failure<Guid>(ApartmentErrors.NotFound);
 
             var duration = DateRange.Create(request.StartDate, request.EndDate);
@@ -53,13 +53,13 @@ namespace Bookify.Application.Bookings.ReserveBooking
 
             try
             {
-                var booking = Booking.Reserve(apartment, request.UserId, duration, _dateTimeProvider.UtcNow, _pricingService);
+                var booking = Booking.Reserve(apartment, new UserId(request.UserId), duration, _dateTimeProvider.UtcNow, _pricingService);
 
                 _bookingRepository.Add(booking);
 
                 await _unitOfWork.SaveChangesAsync();
 
-                return Result.Success<Guid>(booking.Id);
+                return Result.Success<Guid>(booking.Id.Value);
             }
             catch (ConcurrencyException ex)
             {

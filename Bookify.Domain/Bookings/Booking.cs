@@ -2,6 +2,7 @@
 using Bookify.Domain.Apartments;
 using Bookify.Domain.Bookings.Events;
 using Bookify.Domain.Shared;
+using Bookify.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,12 +11,12 @@ using System.Threading.Tasks;
 
 namespace Bookify.Domain.Bookings
 {
-    public sealed class Booking : Entity
+    public sealed class Booking : Entity<BookingId>
     {
         private Booking(
-            Guid id,
-            Guid apartmentId,
-            Guid userId,
+            BookingId id,
+            ApartmentId apartmentId,
+            UserId userId,
             DateRange duration,
             Money priceForPeriod,
             Money cleaningFee,
@@ -42,9 +43,9 @@ namespace Bookify.Domain.Bookings
                 
         }
 
-        public Guid ApartmentId { get; private set; }
+        public ApartmentId ApartmentId { get; private set; }
 
-        public Guid UserId { get; private set; }
+        public UserId UserId { get; private set; }
 
         public DateRange Duration { get; private set; }
 
@@ -69,14 +70,15 @@ namespace Bookify.Domain.Bookings
         public DateTime? CancelledOnUtc { get; private set; }
 
 
-        public static Booking Reserve(Apartment apartment, Guid userId, DateRange duration, DateTime utcNow, PricingService pricingService)
+        public static Booking Reserve(Apartment apartment, UserId userId, DateRange duration, DateTime utcNow, PricingService pricingService)
         {
             var pricingDetails = pricingService.CalculatePrice(apartment, duration);
 
             var booking = new Booking(
-                Guid.NewGuid(),
+                BookingId.New(),
                 apartment.Id, 
-                userId, duration, 
+                userId, 
+                duration, 
                 pricingDetails.PriceForPeriod, 
                 pricingDetails.CleaningFee, 
                 pricingDetails.AmenitiesUpCharge, 

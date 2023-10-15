@@ -40,7 +40,7 @@ namespace Bookify.Application.Users.RegisterUser
             _userRepository.Add(user);
             await _unitOfWork.SaveChangesAsync();
 
-            return Result.Success(user.Id);
+            return Result.Success(user.Id.Value);
         }
     }
 }

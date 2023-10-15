@@ -26,7 +26,7 @@ if (app.Environment.IsDevelopment())
     app.ApplyMigrations();
 
 
-    //app.SeedData();
+    app.SeedData();
 }
 
 app.UseHttpsRedirection();

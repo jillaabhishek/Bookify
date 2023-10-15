@@ -20,6 +20,9 @@ namespace Bookify.Infrastructure.Configurations
 
             builder.HasKey(review => review.Id);
 
+            builder.Property(review => review.Id)
+                   .HasConversion(review => review.Value, value => new ReviewId(value));
+
             builder.Property(review => review.Rating)
                    .HasConversion(review => review.Value, value => Rating.Create(value).Value);
 
@@ -34,7 +37,7 @@ namespace Bookify.Infrastructure.Configurations
             builder.HasOne<Booking>()
                    .WithMany()
                    .HasForeignKey(review => review.BookingId)
-                   .OnDelete(DeleteBehavior.ClientNoAction);                    
+                   .OnDelete(DeleteBehavior.ClientNoAction);
 
             builder.HasOne<User>()
                    .WithMany()

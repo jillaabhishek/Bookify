@@ -1,5 +1,6 @@
 ﻿using Bookify.Domain.Apartments;
 using Bookify.Domain.Bookings;
+using Bookify.Domain.Reviews;
 using Bookify.Domain.Shared;
 using Bookify.Domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,9 @@ namespace Bookify.Infrastructure.Configurations
             builder.ToTable("bookings");
 
             builder.HasKey(booking => booking.Id);
+
+            builder.Property(booking => booking.Id)
+                   .HasConversion(booking => booking.Value, value => new BookingId(value));
 
             builder.OwnsOne(booking => booking.PriceForPeriod, priceBuilder =>
             {

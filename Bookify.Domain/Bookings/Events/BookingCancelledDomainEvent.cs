@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Bookify.Domain.Bookings.Events
 {
-    public record BookingCancelledDomainEvent(Guid BookingId) : IDomainEvent;
+    public record BookingCancelledDomainEvent(BookingId BookingId) : IDomainEvent;
 }

@@ -44,7 +44,7 @@ namespace Bookify.Infrastructure
 
         private async Task PublishDomainEventsAsync()
         {
-            var domainEvents = ChangeTracker.Entries<Entity>().Select(entry => entry.Entity)
+            var domainEvents = ChangeTracker.Entries<IEntity>().Select(entry => entry.Entity)
                 .SelectMany(entity =>
                     {
                         var domainEvents = entity.GetDomainEvents();
